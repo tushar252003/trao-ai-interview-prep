@@ -15,7 +15,7 @@ export interface ProgressEvent { stage: string; percent: number; message: string
 const requirementSchema = {
   type: "OBJECT",
   properties: {
-    requirements: { type: "ARRAY", items: {
+    requirements: { type: "Array", items: {
       type: "OBJECT",
       properties: {
         text: { type: "string" },
@@ -32,7 +32,7 @@ const roleSchema = {
   type: "OBJECT",
   properties: {
     title: { type: "string" }, seniority: { type: "string" },
-    responsibilities: { type: "ARRAY", items: { type: "string" } }
+    responsibilities: { type: "Array", items: { type: "string" } }
   },
   required: ["title","seniority","responsibilities"]
 };
@@ -49,10 +49,10 @@ const companySchema = {
 const questionSchema = {
   type: "OBJECT",
   properties: {
-    questions: { type: "ARRAY", items: {
+    questions: { type: "Array", items: {
       type: "OBJECT",
       properties: {
-        requirement_ids: { type: "ARRAY", items: { type: "string" } },
+        requirement_ids: { type: "Array", items: { type: "string" } },
         category: { type: "string", enum: ["technical","behavioural","system-design","company-fit"] },
         prompt: { type: "string" },
         answer_outline: { type: "string" },
@@ -67,11 +67,11 @@ const questionSchema = {
 const flashcardSchema = {
   type: "OBJECT",
   properties: {
-    flashcards: { type: "ARRAY", items: {
+    flashcards: { type: "Array", items: {
       type: "OBJECT",
       properties: {
         front: { type: "STRING" }, back: { type: "string" },
-        requirement_ids: { type: "ARRAY", items: { type: "string" } }
+        requirement_ids: { type: "Array", items: { type: "string" } }
       },
       required: ["front","back","requirement_ids"]
     }}
@@ -91,7 +91,7 @@ function stableRequirements(raw: any): Requirement[] {
 function filterQuestions(raw: any, reqs: Requirement[], category: string, startIndex: number): Question[] {
   const ids = new Set(reqs.map(r => r.id));
   return (raw.questions || []).filter((q:any) => {
-    return ARRAY.isARRAY(q.requirement_ids) &&
+    return Array.isArray(q.requirement_ids) &&
       q.requirement_ids.length &&
       q.requirement_ids.every((id:string) => ids.has(id)) &&
       q.category === category &&
@@ -109,7 +109,7 @@ function filterQuestions(raw: any, reqs: Requirement[], category: string, startI
 function filterCards(raw:any, reqs:Requirement[], startIndex:number): Flashcard[] {
   const ids = new Set(reqs.map(r => r.id));
   return (raw.flashcards || []).filter((f:any) =>
-    ARRAY.isARRAY(f.requirement_ids) && f.requirement_ids.some((id:string)=>ids.has(id)) && f.front && f.back
+    Array.isArray(f.requirement_ids) && f.requirement_ids.some((id:string)=>ids.has(id)) && f.front && f.back
   ).map((f:any,i:number)=>({
     id:`f${startIndex+i}`, front:String(f.front).trim(), back:String(f.back).trim(),
     requirement_ids:f.requirement_ids.filter((id:string)=>ids.has(id))
@@ -205,7 +205,7 @@ export async function generateKitPipeline(input: PipelineInput, onProgress?: (p:
       const raw = await generateJson<any>(gapPrompt(requirements, uncovered, context), questionSchema);
       const start = questions.length + 1;
       const additions = (raw.questions || []).filter((q:any) =>
-        ARRAY.isARRAY(q.requirement_ids) &&
+        Array.isArray(q.requirement_ids) &&
         q.requirement_ids.some((id:string)=>uncovered.includes(id)) &&
         q.prompt
       ).map((q:any,i:number)=>({
