@@ -1,0 +1,14 @@
+[
+  {
+    "id": "case-01",
+    "jd": "Senior Backend Engineer\n\nWe are looking for a Node.js engineer with strong REST API experience, SQL knowledge, debugging ability and communication skills.",
+    "company_url": "https://example.com/",
+    "days": 5
+  },
+  {
+    "id": "case-02",
+    "jd": "Frontend Engineer\n\nReact and JavaScript experience are required. Responsive UI development is preferred.",
+    "company_url": "https://example.com/",
+    "days": 3
+  }
+]

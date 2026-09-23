@@ -1,0 +1,35 @@
+# Trao Assessment Checklist
+
+- Authentication
+- User-owned kits
+- JD textarea
+- Company URL
+- Days input
+- Background progress
+- Company crawling
+- Link ranking
+- robots.txt
+- Rate limiting/backoff
+- Public interview research
+- Requirement extraction
+- Must/nice
+- Stable requirement IDs
+- Category-specific questions
+- Deterministic coverage
+- Second pass
+- Flashcards
+- Exact-day deterministic schedule
+- Editing
+- Reordering
+- Regeneration state
+- Practice confidence
+- Weak-first ordering
+- Batch CLI
+- Same pipeline for batch/web
+- Failure continuation
+- Structure validation
+- Tests
+- Public frontend
+- Public backend
+- README
+- Loom walkthrough
