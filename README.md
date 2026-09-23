@@ -220,3 +220,17 @@ Set `NEXT_PUBLIC_API_URL` in the frontend deployment to the public backend URL a
 The public-search adapter uses DuckDuckGo's HTML search page rather than a paid search API. Search result availability can change, so the application treats missing public discussion as a valid partial-research state.
 
 The batch command can take several minutes for multiple cases because it intentionally runs real crawling and LLM calls. Free-tier model rate limits are handled with retries, but provider quotas remain an external constraint.
+
+### Gemini API Quota
+
+This application uses the Google Gemini API for AI-powered interview kit generation.
+
+The Gemini API free tier has project-level usage quotas. If the available daily request quota is exhausted, the kit generation endpoint may return a `429 RESOURCE_EXHAUSTED` response until the quota resets or the API project is moved to a higher usage tier.
+
+This is an external API quota limitation and does not affect the application's core frontend, backend, database, authentication, or kit-management functionality.
+
+For local usage, configure a valid Gemini API key in the backend `.env` file:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-3.6-flash
